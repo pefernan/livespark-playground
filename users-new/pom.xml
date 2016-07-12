@@ -41,6 +41,10 @@
     <!-- repository> <id>sonatype</id> <url>http://oss.sonatype.org/content/repositories/snapshots</url>
       <snapshots> <enabled>true</enabled> </snapshots> <releases> <enabled>false</enabled>
       </releases> </repository -->
+    <repository>
+      <id>GOOGLE_SNAPSHOTS</id>
+      <url>https://oss.sonatype.org/content/repositories/google-snapshots</url>
+    </repository>
   </repositories>
 
   <properties>
@@ -49,7 +53,7 @@
     <hibernate.version>4.2.21.Final</hibernate.version>
     <validation.api.version>1.0.0.GA</validation.api.version>
     <version.org.jboss.errai>4.0.0-SNAPSHOT</version.org.jboss.errai>
-    <version.org.uberfire>0.9.0-SNAPSHOT</version.org.uberfire>
+    <version.org.uberfire>1.0.0-SNAPSHOT</version.org.uberfire>
     <gwt.version>2.8.0-rc1</gwt.version>
     <version.org.gwtbootstrap3>0.9.3</version.org.gwtbootstrap3>
     <version.org.livespark>0.0.1-SNAPSHOT</version.org.livespark>
@@ -62,6 +66,26 @@
       not to break the build -->
     <illegaltransitivereportonly>true</illegaltransitivereportonly>
   </properties>
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-user</artifactId>
+        <version>${gwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-dev</artifactId>
+        <version>${gwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.6.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -73,7 +97,6 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
-      <version>${gwt.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -308,6 +331,13 @@
       <version>${version.org.livespark}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.livespark</groupId>
+      <artifactId>livespark-app-flow-client</artifactId>
+      <version>${version.org.livespark}</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
   <build>
   <finalName>${project.artifactId}</finalName>
@@ -343,12 +373,15 @@
           <soyc>false</soyc>
           <hostedWebapp>src/main/webapp</hostedWebapp>
           <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>
-          <draftCompile>true</draftCompile>
           <strict>true</strict>
+          <generateJsInteropExports>true</generateJsInteropExports>
           <compileSourcesArtifacts>
             <!-- LiveSpark -->
             <compileSourcesArtifact>org.livespark:livespark-crud-component</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-form-modeler-rendering-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.livespark:livespark-app-flow-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.livespark:livespark-app-flow-cdi-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.livespark:livespark-app-flow-client</compileSourcesArtifact>
           </compileSourcesArtifacts>
         </configuration>
       </plugin>

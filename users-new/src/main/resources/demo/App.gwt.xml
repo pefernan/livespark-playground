@@ -22,6 +22,7 @@
   <inherits name="org.livespark.widgets.crud.LiveSparkCRUDWidget"/>
   <inherits name="org.livespark.formmodeler.rendering.FormModelerRenderingAPI"/>
   <inherits name='com.google.gwt.user.theme.clean.Clean'/>
+  <inherits name='org.livespark.flow.AppFlow'/>
 
   <set-property name="gwt.logging.enabled" value="TRUE"/>
   <set-property name="gwt.logging.logLevel" value="ALL"/>

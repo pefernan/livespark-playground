@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.errai.ui.shared.api.annotations.Templated;
+import org.livespark.flow.cdi.api.Step;
 import org.livespark.formmodeler.rendering.client.view.ListView;
 import org.uberfire.ext.widgets.table.client.CheckboxCellImpl;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
@@ -14,6 +15,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import demo.client.shared.User;
 import demo.client.shared.UserFormModel;
 
+@Step
 @Templated
 public class UserListView extends ListView<User, UserFormModel>
 {
