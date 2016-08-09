@@ -1,14 +1,12 @@
 package demo.server;
 
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
 import demo.client.shared.Department;
+import java.util.List;
 import demo.client.shared.DepartmentRestService;
+import javax.inject.Inject;
+import javax.ejb.Stateless;
+import java.lang.Override;
 
-@Dependent
 @Stateless
 public class DepartmentRestServiceImpl implements DepartmentRestService
 {
@@ -26,7 +24,7 @@ public class DepartmentRestServiceImpl implements DepartmentRestService
    @Override
    public List<Department> load()
    {
-      return entityService.listAll(demo.client.shared.Department.class);
+      return entityService.listAll(Department.class);
    }
 
    @Override

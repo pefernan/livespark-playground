@@ -16,22 +16,22 @@ public class Address implements java.io.Serializable
    @javax.persistence.SequenceGenerator(sequenceName = "ADDRESS_ID_SEQ", name = "ADDRESS_ID_GENERATOR")
    private java.lang.Long id;
 
-   @org.kie.api.definition.type.Label(value = "Street Name")
+   @org.kie.api.definition.type.Label("Street Name")
    @org.hibernate.validator.constraints.NotEmpty
    private java.lang.String street;
 
-   @org.kie.api.definition.type.Label(value = "Num #")
+   @org.kie.api.definition.type.Label("Street #")
    private java.lang.Integer num;
 
-   @org.kie.api.definition.type.Label(value = "CP")
+   @org.kie.api.definition.type.Label("CP")
    @org.hibernate.validator.constraints.NotEmpty
    private java.lang.String cp;
 
-   @org.kie.api.definition.type.Label(value = "City")
+   @org.kie.api.definition.type.Label("City")
    @org.hibernate.validator.constraints.NotEmpty
    private java.lang.String city;
 
-   @org.kie.api.definition.type.Label(value = "Country")
+   @org.kie.api.definition.type.Label("Country")
    private java.lang.String country;
 
    public Address()

@@ -1,23 +1,26 @@
 package demo.client.local;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import demo.client.shared.Address;
+import org.livespark.formmodeler.rendering.client.view.FormView;
 import demo.client.shared.AddressFormModel;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
+import javax.inject.Named;
+import java.util.List;
+import java.util.ArrayList;
+import demo.client.shared.Address;
 import org.gwtbootstrap3.client.ui.TextBox;
+import javax.inject.Inject;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
-import org.livespark.formmodeler.rendering.client.view.FormView;
 
 @Templated
 @Named("AddressFormView")
 public class AddressFormView extends FormView<AddressFormModel>
 {
 
+   @Inject
+   @Bound(property = "address.id")
+   @DataField
+   private TextBox address_id;
    @Inject
    @Bound(property = "address.street")
    @DataField
@@ -51,7 +54,7 @@ public class AddressFormView extends FormView<AddressFormModel>
       List entities = new ArrayList();
       Object address = getModel().getAddress();
       if (address != null)
-         entities.add( address );
+         entities.add(address);
       return entities;
    }
 
@@ -65,6 +68,7 @@ public class AddressFormView extends FormView<AddressFormModel>
    @Override
    protected void initForm()
    {
+      validator.registerInput("address_id", address_id);
       validator.registerInput("address_street", address_street);
       validator.registerInput("address_num", address_num);
       validator.registerInput("address_cp", address_cp);
@@ -92,15 +96,5 @@ public class AddressFormView extends FormView<AddressFormModel>
       address_cp.setReadOnly(readOnly);
       address_city.setReadOnly(readOnly);
       address_country.setReadOnly(readOnly);
-   }
-
-   @Override
-   public AddressFormModel getModel() {
-      return binder.getModel();
-   }
-
-   @Override
-   public boolean isValid() {
-      return validate() & doExtraValidations();
    }
 }

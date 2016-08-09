@@ -1,36 +1,36 @@
 package demo.client.local;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
+import org.livespark.formmodeler.rendering.client.view.FormView;
+import demo.client.shared.UserFormModel;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 import javax.inject.Named;
-
-import org.gwtbootstrap3.client.ui.SimpleCheckBox;
+import java.util.List;
+import java.util.ArrayList;
+import demo.client.shared.User;
 import org.gwtbootstrap3.client.ui.TextBox;
-import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
+import javax.inject.Inject;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
-import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubForm;
-import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubFormModelAdapter;
+import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
+import org.gwtbootstrap3.client.ui.SimpleCheckBox;
 import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
-import org.livespark.formmodeler.rendering.client.view.FormView;
-import org.uberfire.ext.widgets.table.client.ColumnMeta;
-
-import com.google.gwt.user.cellview.client.TextColumn;
-
 import demo.client.shared.Address;
 import demo.client.shared.AddressFormModel;
-import demo.client.shared.User;
-import demo.client.shared.UserFormModel;
+import demo.client.local.AddressFormView;
+import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubForm;
+import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubFormModelAdapter;
+import org.uberfire.ext.widgets.table.client.ColumnMeta;
 
 @Templated
 @Named("UserFormView")
 public class UserFormView extends FormView<UserFormModel>
 {
 
+   @Inject
+   @Bound(property = "user.id")
+   @DataField
+   private TextBox user_id;
    @Inject
    @Bound(property = "user.name")
    @DataField
@@ -47,12 +47,16 @@ public class UserFormView extends FormView<UserFormModel>
    @Bound(property = "user.married")
    @DataField
    private SimpleCheckBox user_married;
+   @Inject
+   @Bound(property = "user.title")
+   @DataField
+   private TextBox user_title;
    @DataField
    private SubForm user_address = new SubForm(
-           new User_addressSubFormModelAdapter());
+         new User_addressSubFormModelAdapter());
    @DataField
    private MultipleSubForm user_adresses = new MultipleSubForm(
-           new User_adressesMultipleSubFormModelAdapter());
+         new User_adressesMultipleSubFormModelAdapter());
 
    @Override
    protected int getEntitiesCount()
@@ -80,10 +84,12 @@ public class UserFormView extends FormView<UserFormModel>
    @Override
    protected void initForm()
    {
+      validator.registerInput("user_id", user_id);
       validator.registerInput("user_name", user_name);
       validator.registerInput("user_lastName", user_lastName);
       validator.registerInput("user_birthday", user_birthday);
       validator.registerInput("user_married", user_married);
+      validator.registerInput("user_title", user_title);
       validator.registerInput("user_address", user_address);
       updateNestedModels(true);
       validator.registerInput("user_adresses", user_adresses);
@@ -106,7 +112,7 @@ public class UserFormView extends FormView<UserFormModel>
    }
 
    public class User_addressSubFormModelAdapter implements
-           SubFormModelAdapter<Address, AddressFormModel>
+         SubFormModelAdapter<Address, AddressFormModel>
    {
       @Override
       public Class<AddressFormView> getFormViewType()
@@ -147,8 +153,8 @@ public class UserFormView extends FormView<UserFormModel>
    }
 
    public class User_adressesMultipleSubFormModelAdapter
-           implements
-           MultipleSubFormModelAdapter<List<Address>, Address, AddressFormModel, AddressFormModel>
+         implements
+         MultipleSubFormModelAdapter<List<Address>, Address, AddressFormModel, AddressFormModel>
    {
       @Override
       public Class<AddressFormView> getCreationForm()
@@ -169,86 +175,10 @@ public class UserFormView extends FormView<UserFormModel>
       }
 
       @Override
-      public List<ColumnMeta<Address>> getCrudColumns()
-      {
-         List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
-         ColumnMeta<Address> street_columnMeta = new ColumnMeta<>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getStreet();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "Street Name");
-         columnMetas.add(street_columnMeta);
-         ColumnMeta<Address> num_columnMeta = new ColumnMeta<>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getNum();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "#");
-         columnMetas.add(num_columnMeta);
-         ColumnMeta<Address> cp_columnMeta = new ColumnMeta<>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getCp();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "CP");
-         columnMetas.add(cp_columnMeta);
-         ColumnMeta<Address> city_columnMeta = new ColumnMeta<>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getCity();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "City");
-         columnMetas.add(city_columnMeta);
-         ColumnMeta<Address> country_columnMeta = new ColumnMeta<>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getCountry();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "Country");
-         columnMetas.add(country_columnMeta);
-         return columnMetas;
-      }
+		public List<ColumnMeta<Address>> getCrudColumns() {
+			List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
+			return columnMetas;
+		}
    }
 
    @Override
@@ -258,6 +188,7 @@ public class UserFormView extends FormView<UserFormModel>
       user_lastName.setReadOnly(readOnly);
       user_birthday.setReadOnly(readOnly);
       user_married.setEnabled(!readOnly);
+      user_title.setReadOnly(readOnly);
       user_address.setReadOnly(readOnly);
    }
 }

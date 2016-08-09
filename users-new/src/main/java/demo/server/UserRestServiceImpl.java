@@ -1,14 +1,12 @@
 package demo.server;
 
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
-
 import demo.client.shared.User;
+import java.util.List;
 import demo.client.shared.UserRestService;
+import javax.inject.Inject;
+import javax.ejb.Stateless;
+import java.lang.Override;
 
-@Dependent
 @Stateless
 public class UserRestServiceImpl implements UserRestService
 {
@@ -26,20 +24,20 @@ public class UserRestServiceImpl implements UserRestService
    @Override
    public List<User> load()
    {
-      return entityService.listAll(demo.client.shared.User.class);
+      return entityService.listAll(User.class);
    }
 
    @Override
-   public Boolean update( User model )
+   public Boolean update(User model)
    {
-      entityService.update( model );
+      entityService.update(model);
       return true;
    }
 
    @Override
-   public Boolean delete( User model )
+   public Boolean delete(User model)
    {
-      entityService.delete( model );
+      entityService.delete(model);
       return true;
    }
 }

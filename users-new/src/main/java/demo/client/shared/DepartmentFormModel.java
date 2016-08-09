@@ -1,14 +1,14 @@
 package demo.client.shared;
 
-import java.util.Arrays;
+import org.livespark.formmodeler.rendering.client.shared.FormModel;
 import java.util.List;
-import javax.inject.Named;
-import javax.validation.Valid;
-
-import org.jboss.errai.common.client.api.annotations.MapsTo;
+import java.util.Arrays;
 import org.jboss.errai.common.client.api.annotations.Portable;
 import org.jboss.errai.databinding.client.api.Bindable;
-import org.livespark.formmodeler.rendering.client.shared.FormModel;
+import javax.inject.Named;
+import javax.validation.Valid;
+import org.jboss.errai.common.client.api.annotations.MapsTo;
+import java.lang.Override;
 
 @Portable
 @Bindable

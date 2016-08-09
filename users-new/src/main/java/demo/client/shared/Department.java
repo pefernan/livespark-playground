@@ -18,6 +18,7 @@ public class Department implements java.io.Serializable
 
    @org.kie.api.definition.type.Label("Dep. Name")
    @org.hibernate.validator.constraints.NotEmpty
+   @org.kie.api.definition.type.Description("Department name")
    private String name;
 
    @org.kie.api.definition.type.Label("Dep. Description")
@@ -29,7 +30,7 @@ public class Department implements java.io.Serializable
    private demo.client.shared.Address address;
 
    @javax.persistence.OneToMany(fetch = javax.persistence.FetchType.EAGER, cascade = { javax.persistence.CascadeType.ALL })
-   @org.kie.api.definition.type.Label(value = "Employees")
+   @org.kie.api.definition.type.Label("Employees")
    private java.util.List<User> employees;
 
    public Department()
@@ -86,9 +87,9 @@ public class Department implements java.io.Serializable
       this.employees = employees;
    }
 
-   public Department(Long id, String name,
-         String description, demo.client.shared.Address address,
-         java.util.List<User> employees)
+   public Department(java.lang.Long id, java.lang.String name,
+         java.lang.String description, demo.client.shared.Address address,
+         java.util.List<demo.client.shared.User> employees)
    {
       this.id = id;
       this.name = name;

@@ -32,19 +32,19 @@ public class User implements java.io.Serializable
    @javax.validation.constraints.NotNull
    private java.util.Date birthday;
 
-   @org.kie.api.definition.type.Label("Married")
+   @org.kie.api.definition.type.Label("Marital Status")
    private java.lang.Boolean married;
 
    @org.kie.api.definition.type.Label("Title")
    private java.lang.String title;
 
    @org.kie.api.definition.type.Label("Address")
-   @javax.persistence.ManyToOne(fetch = javax.persistence.FetchType.EAGER, cascade = {
-         javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE }, optional = false)
+   @javax.persistence.ManyToOne(optional = false, fetch = javax.persistence.FetchType.EAGER, cascade = {
+         javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE })
    private demo.client.shared.Address address;
 
    @javax.persistence.OneToMany(fetch = javax.persistence.FetchType.EAGER, cascade = {
-           javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE })
+         javax.persistence.CascadeType.ALL, javax.persistence.CascadeType.REMOVE })
    @org.kie.api.definition.type.Label("Other Adresses")
    private java.util.List<demo.client.shared.Address> adresses;
 
