@@ -1,25 +1,27 @@
 package demo.client.local;
 
-import org.livespark.formmodeler.rendering.client.view.FormView;
-import demo.client.shared.DepartmentFormModel;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
-import javax.inject.Named;
-import java.util.List;
 import java.util.ArrayList;
-import demo.client.shared.Department;
-import org.gwtbootstrap3.client.ui.TextBox;
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.gwtbootstrap3.client.ui.TextBox;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
+import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.view.FormView;
+
 import demo.client.shared.Address;
 import demo.client.shared.AddressFormModel;
-import demo.client.local.AddressFormView;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import demo.client.shared.Department;
+import demo.client.shared.DepartmentFormModel;
 
 @Templated
 @Named("DepartmentFormView")
-public class DepartmentFormView extends FormView<DepartmentFormModel>
+public class DepartmentFormView extends FormView<Department, DepartmentFormModel>
 {
 
    @Inject
@@ -35,7 +37,7 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
    @DataField
    private TextBox department_description;
    @DataField
-   private SubForm department_address = new SubForm(
+   private final SubForm department_address = new SubForm(
          new Department_addressSubFormModelAdapter());
 
    @Override
@@ -47,8 +49,8 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
    @Override
    protected List getEntities()
    {
-      List entities = new ArrayList();
-      Object department = getModel().getDepartment();
+      final List entities = new ArrayList();
+      final Object department = getModel().getDepartment();
       if (department != null)
          entities.add(department);
       return entities;
@@ -98,13 +100,13 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
       }
 
       @Override
-      public AddressFormModel getFormModelForModel(Address model)
+      public AddressFormModel getFormModelForModel(final Address model)
       {
          return new AddressFormModel(model);
       }
    }
 
-   protected void updateNestedModels(boolean init)
+   protected void updateNestedModels(final boolean init)
    {
       demo.client.shared.Address address = getModel().getDepartment()
             .getAddress();
@@ -117,14 +119,14 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
    }
 
    @Override
-   public void setModel(DepartmentFormModel model)
+   public void setModel(final DepartmentFormModel model)
    {
       super.setModel(model);
       updateNestedModels(false);
    }
 
    @Override
-   public void setReadOnly(boolean readOnly)
+   public void setReadOnly(final boolean readOnly)
    {
       department_name.setReadOnly(readOnly);
       department_description.setReadOnly(readOnly);

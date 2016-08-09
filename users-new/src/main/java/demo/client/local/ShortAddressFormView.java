@@ -15,7 +15,7 @@ import org.livespark.formmodeler.rendering.client.view.FormView;
 
 @Templated
 @Named("ShortAddressFormView")
-public class ShortAddressFormView extends FormView<ShortAddressFormModel>
+public class ShortAddressFormView extends FormView<Address, ShortAddressFormModel>
 {
 
    @Inject
@@ -36,8 +36,8 @@ public class ShortAddressFormView extends FormView<ShortAddressFormModel>
    @Override
    protected List getEntities()
    {
-      List entities = new ArrayList();
-      Object address = getModel().getAddress();
+      final List entities = new ArrayList();
+      final Object address = getModel().getAddress();
       if (address != null)
          entities.add( address );
       return entities;
@@ -65,12 +65,12 @@ public class ShortAddressFormView extends FormView<ShortAddressFormModel>
    @Override
    public boolean doExtraValidations()
    {
-      boolean valid = true;
+      final boolean valid = true;
       return valid;
    }
 
    @Override
-   public void setReadOnly(boolean readOnly)
+   public void setReadOnly(final boolean readOnly)
    {
       address_street.setReadOnly(readOnly);
       address_num.setReadOnly(readOnly);

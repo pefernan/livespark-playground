@@ -1,30 +1,32 @@
 package demo.client.local;
 
-import org.livespark.formmodeler.rendering.client.view.FormView;
-import demo.client.shared.UserFormModel;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
-import javax.inject.Named;
-import java.util.List;
 import java.util.ArrayList;
-import demo.client.shared.User;
-import org.gwtbootstrap3.client.ui.TextBox;
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.gwtbootstrap3.client.ui.SimpleCheckBox;
+import org.gwtbootstrap3.client.ui.TextBox;
+import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
-import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
-import org.gwtbootstrap3.client.ui.SimpleCheckBox;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
-import demo.client.shared.Address;
-import demo.client.shared.AddressFormModel;
-import demo.client.local.AddressFormView;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubForm;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
+import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.view.FormView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
+
+import demo.client.shared.Address;
+import demo.client.shared.AddressFormModel;
+import demo.client.shared.User;
+import demo.client.shared.UserFormModel;
 
 @Templated
 @Named("UserFormView")
-public class UserFormView extends FormView<UserFormModel>
+public class UserFormView extends FormView<User, UserFormModel>
 {
 
    @Inject
@@ -52,10 +54,10 @@ public class UserFormView extends FormView<UserFormModel>
    @DataField
    private TextBox user_title;
    @DataField
-   private SubForm user_address = new SubForm(
+   private final SubForm user_address = new SubForm(
          new User_addressSubFormModelAdapter());
    @DataField
-   private MultipleSubForm user_adresses = new MultipleSubForm(
+   private final MultipleSubForm user_adresses = new MultipleSubForm(
          new User_adressesMultipleSubFormModelAdapter());
 
    @Override
@@ -67,8 +69,8 @@ public class UserFormView extends FormView<UserFormModel>
    @Override
    protected List getEntities()
    {
-      List entities = new ArrayList();
-      Object user = getModel().getUser();
+      final List entities = new ArrayList();
+      final Object user = getModel().getUser();
       if (user != null)
          entities.add(user);
       return entities;
@@ -121,13 +123,13 @@ public class UserFormView extends FormView<UserFormModel>
       }
 
       @Override
-      public AddressFormModel getFormModelForModel(Address model)
+      public AddressFormModel getFormModelForModel(final Address model)
       {
          return new AddressFormModel(model);
       }
    }
 
-   protected void updateNestedModels(boolean init)
+   protected void updateNestedModels(final boolean init)
    {
       demo.client.shared.Address address = getModel().getUser().getAddress();
       if (address == null && init)
@@ -146,7 +148,7 @@ public class UserFormView extends FormView<UserFormModel>
    }
 
    @Override
-   public void setModel(UserFormModel model)
+   public void setModel(final UserFormModel model)
    {
       super.setModel(model);
       updateNestedModels(false);
@@ -169,20 +171,20 @@ public class UserFormView extends FormView<UserFormModel>
       }
 
       @Override
-      public AddressFormModel getEditionFormModel(Address model)
+      public AddressFormModel getEditionFormModel(final Address model)
       {
          return new AddressFormModel(model);
       }
 
       @Override
 		public List<ColumnMeta<Address>> getCrudColumns() {
-			List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
+			final List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
 			return columnMetas;
 		}
    }
 
    @Override
-   public void setReadOnly(boolean readOnly)
+   public void setReadOnly(final boolean readOnly)
    {
       user_name.setReadOnly(readOnly);
       user_lastName.setReadOnly(readOnly);

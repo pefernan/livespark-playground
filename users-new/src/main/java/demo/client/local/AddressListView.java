@@ -1,26 +1,20 @@
 package demo.client.local;
 
-import org.livespark.formmodeler.rendering.client.view.ListView;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
-import demo.client.shared.AddressFormModel;
-import demo.client.local.AddressFormView;
-import demo.client.shared.AddressRestService;
-import java.lang.Override;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.jboss.errai.ui.shared.api.annotations.Templated;
+import org.livespark.formmodeler.rendering.client.view.ListView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
+
 import com.google.gwt.user.cellview.client.TextColumn;
+
 import demo.client.shared.Address;
+import demo.client.shared.AddressFormModel;
 
 @Templated
 public class AddressListView extends ListView<Address, AddressFormModel>
 {
-
-   @Override
-   protected Class<AddressFormView> getFormType()
-   {
-      return AddressFormView.class;
-   }
 
    @Override
    public String getListTitle()
@@ -41,19 +35,13 @@ public class AddressListView extends ListView<Address, AddressFormModel>
    }
 
    @Override
-   protected Class<AddressRestService> getRemoteServiceClass()
-   {
-      return AddressRestService.class;
-   }
-
-   @Override
 	public List<ColumnMeta<Address>> getCrudColumns() {
-		List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
-		ColumnMeta<Address> id_columnMeta = new ColumnMeta<Address>(
+		final List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
+		final ColumnMeta<Address> id_columnMeta = new ColumnMeta<>(
 				new TextColumn<Address>() {
 					@Override
-					public String getValue(Address model) {
-						Object value = model.getId();
+					public String getValue(final Address model) {
+						final Object value = model.getId();
 						if (value == null) {
 							return "";
 						}
@@ -61,11 +49,11 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 					}
 				}, "ID #");
 		columnMetas.add(id_columnMeta);
-		ColumnMeta<Address> street_columnMeta = new ColumnMeta<Address>(
+		final ColumnMeta<Address> street_columnMeta = new ColumnMeta<>(
 				new TextColumn<Address>() {
 					@Override
-					public String getValue(Address model) {
-						Object value = model.getStreet();
+					public String getValue(final Address model) {
+						final Object value = model.getStreet();
 						if (value == null) {
 							return "";
 						}
@@ -73,11 +61,11 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 					}
 				}, "Street Name");
 		columnMetas.add(street_columnMeta);
-		ColumnMeta<Address> num_columnMeta = new ColumnMeta<Address>(
+		final ColumnMeta<Address> num_columnMeta = new ColumnMeta<>(
 				new TextColumn<Address>() {
 					@Override
-					public String getValue(Address model) {
-						Object value = model.getNum();
+					public String getValue(final Address model) {
+						final Object value = model.getNum();
 						if (value == null) {
 							return "";
 						}
@@ -85,11 +73,11 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 					}
 				}, "Street #");
 		columnMetas.add(num_columnMeta);
-		ColumnMeta<Address> cp_columnMeta = new ColumnMeta<Address>(
+		final ColumnMeta<Address> cp_columnMeta = new ColumnMeta<>(
 				new TextColumn<Address>() {
 					@Override
-					public String getValue(Address model) {
-						Object value = model.getCp();
+					public String getValue(final Address model) {
+						final Object value = model.getCp();
 						if (value == null) {
 							return "";
 						}
@@ -97,11 +85,11 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 					}
 				}, "CP");
 		columnMetas.add(cp_columnMeta);
-		ColumnMeta<Address> city_columnMeta = new ColumnMeta<Address>(
+		final ColumnMeta<Address> city_columnMeta = new ColumnMeta<>(
 				new TextColumn<Address>() {
 					@Override
-					public String getValue(Address model) {
-						Object value = model.getCity();
+					public String getValue(final Address model) {
+						final Object value = model.getCity();
 						if (value == null) {
 							return "";
 						}
@@ -109,11 +97,11 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 					}
 				}, "City");
 		columnMetas.add(city_columnMeta);
-		ColumnMeta<Address> country_columnMeta = new ColumnMeta<Address>(
+		final ColumnMeta<Address> country_columnMeta = new ColumnMeta<>(
 				new TextColumn<Address>() {
 					@Override
-					public String getValue(Address model) {
-						Object value = model.getCountry();
+					public String getValue(final Address model) {
+						final Object value = model.getCountry();
 						if (value == null) {
 							return "";
 						}
@@ -125,16 +113,21 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 	}
 
    @Override
-   public Address getModel(AddressFormModel formModel)
+   public Address getModel(final AddressFormModel formModel)
    {
       return formModel.getAddress();
    }
 
    @Override
-   public AddressFormModel createFormModel(Address address)
+   public AddressFormModel createFormModel(final Address address)
    {
-      AddressFormModel formModel = new AddressFormModel();
+      final AddressFormModel formModel = new AddressFormModel();
       formModel.setAddress(address);
       return formModel;
    }
+
+    @Override
+    public Address newModel() {
+        return new Address();
+    }
 }

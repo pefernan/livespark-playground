@@ -14,7 +14,7 @@ import org.jboss.errai.ui.shared.api.annotations.DataField;
 
 @Templated
 @Named("AddressFormView")
-public class AddressFormView extends FormView<AddressFormModel>
+public class AddressFormView extends FormView<Address, AddressFormModel>
 {
 
    @Inject
@@ -51,8 +51,8 @@ public class AddressFormView extends FormView<AddressFormModel>
    @Override
    protected List getEntities()
    {
-      List entities = new ArrayList();
-      Object address = getModel().getAddress();
+      final List entities = new ArrayList();
+      final Object address = getModel().getAddress();
       if (address != null)
          entities.add(address);
       return entities;
@@ -84,12 +84,12 @@ public class AddressFormView extends FormView<AddressFormModel>
    @Override
    public boolean doExtraValidations()
    {
-      boolean valid = true;
+      final boolean valid = true;
       return valid;
    }
 
    @Override
-   public void setReadOnly(boolean readOnly)
+   public void setReadOnly(final boolean readOnly)
    {
       address_street.setReadOnly(readOnly);
       address_num.setReadOnly(readOnly);
