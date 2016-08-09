@@ -1,28 +1,30 @@
 package demo.client.local;
 
-import org.livespark.formmodeler.rendering.client.view.FormView;
-import demo.client.shared.UserFormModel;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
-import javax.inject.Named;
-import java.util.List;
 import java.util.ArrayList;
-import demo.client.shared.User;
-import org.gwtbootstrap3.client.ui.TextBox;
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.gwtbootstrap3.client.ui.SimpleCheckBox;
+import org.gwtbootstrap3.client.ui.TextBox;
+import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
-import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
-import org.gwtbootstrap3.client.ui.SimpleCheckBox;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
-import demo.client.shared.Address;
-import demo.client.shared.AddressFormModel;
-import demo.client.local.AddressFormView;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubForm;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
+import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.view.FormView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
+
 import com.google.gwt.user.cellview.client.TextColumn;
-import java.lang.Override;
+
+import demo.client.shared.Address;
+import demo.client.shared.AddressFormModel;
+import demo.client.shared.User;
+import demo.client.shared.UserFormModel;
 
 @Templated
 @Named("UserFormView")
@@ -167,10 +169,10 @@ public class UserFormView extends FormView<UserFormModel>
       }
 
       @Override
-      public List<ColumnMeta> getCrudColumns()
+      public List<ColumnMeta<Address>> getCrudColumns()
       {
-         List<ColumnMeta> columnMetas = new ArrayList<ColumnMeta>();
-         ColumnMeta<Address> street_columnMeta = new ColumnMeta<Address>(
+         List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
+         ColumnMeta<Address> street_columnMeta = new ColumnMeta<>(
                  new TextColumn<Address>()
                  {
                     @Override
@@ -185,7 +187,7 @@ public class UserFormView extends FormView<UserFormModel>
                     }
                  }, "Street Name");
          columnMetas.add(street_columnMeta);
-         ColumnMeta<Address> num_columnMeta = new ColumnMeta<Address>(
+         ColumnMeta<Address> num_columnMeta = new ColumnMeta<>(
                  new TextColumn<Address>()
                  {
                     @Override
@@ -200,7 +202,7 @@ public class UserFormView extends FormView<UserFormModel>
                     }
                  }, "#");
          columnMetas.add(num_columnMeta);
-         ColumnMeta<Address> cp_columnMeta = new ColumnMeta<Address>(
+         ColumnMeta<Address> cp_columnMeta = new ColumnMeta<>(
                  new TextColumn<Address>()
                  {
                     @Override
@@ -215,7 +217,7 @@ public class UserFormView extends FormView<UserFormModel>
                     }
                  }, "CP");
          columnMetas.add(cp_columnMeta);
-         ColumnMeta<Address> city_columnMeta = new ColumnMeta<Address>(
+         ColumnMeta<Address> city_columnMeta = new ColumnMeta<>(
                  new TextColumn<Address>()
                  {
                     @Override
@@ -230,7 +232,7 @@ public class UserFormView extends FormView<UserFormModel>
                     }
                  }, "City");
          columnMetas.add(city_columnMeta);
-         ColumnMeta<Address> country_columnMeta = new ColumnMeta<Address>(
+         ColumnMeta<Address> country_columnMeta = new ColumnMeta<>(
                  new TextColumn<Address>()
                  {
                     @Override

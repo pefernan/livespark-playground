@@ -3,13 +3,15 @@ package demo.client.local;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.cellview.client.TextColumn;
-import demo.client.shared.Department;
-import demo.client.shared.DepartmentFormModel;
-import demo.client.shared.DepartmentRestService;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.livespark.formmodeler.rendering.client.view.ListView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
+
+import com.google.gwt.user.cellview.client.TextColumn;
+
+import demo.client.shared.Department;
+import demo.client.shared.DepartmentFormModel;
+import demo.client.shared.DepartmentRestService;
 
 @Templated
 public class DepartmentListView extends ListView<Department, DepartmentFormModel>
@@ -46,10 +48,10 @@ public class DepartmentListView extends ListView<Department, DepartmentFormModel
    }
 
    @Override
-   public List<ColumnMeta> getCrudColumns()
+   public List<ColumnMeta<Department>> getCrudColumns()
    {
-      List<ColumnMeta> columnMetas = new ArrayList<ColumnMeta>();
-      ColumnMeta<Department> id_columnMeta = new ColumnMeta<Department>(
+      List<ColumnMeta<Department>> columnMetas = new ArrayList<>();
+      ColumnMeta<Department> id_columnMeta = new ColumnMeta<>(
             new TextColumn<Department>()
             {
                @Override
@@ -64,7 +66,7 @@ public class DepartmentListView extends ListView<Department, DepartmentFormModel
                }
             }, "ID");
       columnMetas.add(id_columnMeta);
-      ColumnMeta<Department> name_columnMeta = new ColumnMeta<Department>(
+      ColumnMeta<Department> name_columnMeta = new ColumnMeta<>(
             new TextColumn<Department>()
             {
                @Override
@@ -79,7 +81,7 @@ public class DepartmentListView extends ListView<Department, DepartmentFormModel
                }
             }, "Dep. Name");
       columnMetas.add(name_columnMeta);
-      ColumnMeta<Department> description_columnMeta = new ColumnMeta<Department>(
+      ColumnMeta<Department> description_columnMeta = new ColumnMeta<>(
             new TextColumn<Department>()
             {
                @Override

@@ -3,13 +3,15 @@ package demo.client.local;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.cellview.client.TextColumn;
-import demo.client.shared.Address;
-import demo.client.shared.AddressFormModel;
-import demo.client.shared.AddressRestService;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.livespark.formmodeler.rendering.client.view.ListView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
+
+import com.google.gwt.user.cellview.client.TextColumn;
+
+import demo.client.shared.Address;
+import demo.client.shared.AddressFormModel;
+import demo.client.shared.AddressRestService;
 
 @Templated
 public class AddressListView extends ListView<Address, AddressFormModel>
@@ -40,10 +42,10 @@ public class AddressListView extends ListView<Address, AddressFormModel>
    }
 
    @Override
-   public List<ColumnMeta> getCrudColumns() {
-      List<ColumnMeta> metas = new ArrayList<ColumnMeta>();
+   public List<ColumnMeta<Address>> getCrudColumns() {
+      List<ColumnMeta<Address>> metas = new ArrayList<>();
 
-      ColumnMeta<Address> columnMeta = new ColumnMeta<Address>( new TextColumn<Address>() {
+      ColumnMeta<Address> columnMeta = new ColumnMeta<>( new TextColumn<Address>() {
          @Override
          public String getValue( Address address ) {
             if ( address.getId() == null ) {
@@ -55,7 +57,7 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<Address>( new TextColumn<Address>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<Address>() {
          @Override
          public String getValue( Address address ) {
             return address.getStreet();
@@ -64,7 +66,7 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<Address>( new TextColumn<Address>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<Address>() {
          @Override
          public String getValue( Address address ) {
             if ( address.getNum() == null ) {
@@ -76,7 +78,7 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<Address>( new TextColumn<Address>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<Address>() {
          @Override
          public String getValue( Address address ) {
             return address.getCp();
@@ -85,7 +87,7 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<Address>( new TextColumn<Address>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<Address>() {
          @Override
          public String getValue( Address address ) {
             return address.getCity();
@@ -94,7 +96,7 @@ public class AddressListView extends ListView<Address, AddressFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<Address>( new TextColumn<Address>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<Address>() {
          @Override
          public String getValue( Address address ) {
             return address.getCountry();

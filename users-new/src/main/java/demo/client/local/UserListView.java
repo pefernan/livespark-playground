@@ -3,13 +3,15 @@ package demo.client.local;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.cellview.client.TextColumn;
-import demo.client.shared.User;
-import demo.client.shared.UserFormModel;
-import demo.client.shared.UserRestService;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.livespark.formmodeler.rendering.client.view.ListView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
+
+import com.google.gwt.user.cellview.client.TextColumn;
+
+import demo.client.shared.User;
+import demo.client.shared.UserFormModel;
+import demo.client.shared.UserRestService;
 
 @Templated
 public class UserListView extends ListView<User, UserFormModel>
@@ -40,10 +42,10 @@ public class UserListView extends ListView<User, UserFormModel>
    }
 
    @Override
-   public List<ColumnMeta> getCrudColumns() {
-      List<ColumnMeta> metas = new ArrayList<ColumnMeta>();
+   public List<ColumnMeta<User>> getCrudColumns() {
+      List<ColumnMeta<User>> metas = new ArrayList<>();
 
-      ColumnMeta<User> columnMeta = new ColumnMeta<User>( new TextColumn<User>() {
+      ColumnMeta<User> columnMeta = new ColumnMeta<>( new TextColumn<User>() {
          @Override
          public String getValue( User user ) {
             if ( user.getId() == null ) {
@@ -55,7 +57,7 @@ public class UserListView extends ListView<User, UserFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<User>( new TextColumn<User>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<User>() {
          @Override
          public String getValue( User user ) {
             if ( user.getName() == null ) {
@@ -67,7 +69,7 @@ public class UserListView extends ListView<User, UserFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<User>( new TextColumn<User>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<User>() {
          @Override
          public String getValue( User user ) {
             if ( user.getLastName() == null ) {
@@ -79,7 +81,7 @@ public class UserListView extends ListView<User, UserFormModel>
 
       metas.add( columnMeta );
 
-      columnMeta = new ColumnMeta<User>( new TextColumn<User>() {
+      columnMeta = new ColumnMeta<>( new TextColumn<User>() {
          @Override
          public String getValue( User user ) {
             if ( user.getBirthday() == null ) {

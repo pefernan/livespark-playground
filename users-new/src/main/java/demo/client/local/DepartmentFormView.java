@@ -2,16 +2,10 @@ package demo.client.local;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.google.gwt.user.cellview.client.TextColumn;
-import demo.client.shared.Address;
-import demo.client.shared.AddressFormModel;
-import demo.client.shared.Department;
-import demo.client.shared.DepartmentFormModel;
-import demo.client.shared.User;
-import demo.client.shared.UserFormModel;
 import org.gwtbootstrap3.client.ui.TextArea;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
@@ -23,6 +17,15 @@ import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
 import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
 import org.livespark.formmodeler.rendering.client.view.FormView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
+
+import com.google.gwt.user.cellview.client.TextColumn;
+
+import demo.client.shared.Address;
+import demo.client.shared.AddressFormModel;
+import demo.client.shared.Department;
+import demo.client.shared.DepartmentFormModel;
+import demo.client.shared.User;
+import demo.client.shared.UserFormModel;
 
 @Templated
 @Named("DepartmentFormView")
@@ -159,10 +162,10 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
       }
 
       @Override
-      public List<ColumnMeta> getCrudColumns()
+      public List<ColumnMeta<User>> getCrudColumns()
       {
-         List<ColumnMeta> columnMetas = new ArrayList<ColumnMeta>();
-         ColumnMeta<User> name_columnMeta = new ColumnMeta<User>(
+         List<ColumnMeta<User>> columnMetas = new ArrayList<>();
+         ColumnMeta<User> name_columnMeta = new ColumnMeta<>(
                new TextColumn<User>()
                {
                   @Override
@@ -177,7 +180,7 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
                   }
                }, "Name");
          columnMetas.add(name_columnMeta);
-         ColumnMeta<User> lastName_columnMeta = new ColumnMeta<User>(
+         ColumnMeta<User> lastName_columnMeta = new ColumnMeta<>(
                new TextColumn<User>()
                {
                   @Override
@@ -192,7 +195,7 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
                   }
                }, "Last Name");
          columnMetas.add(lastName_columnMeta);
-         ColumnMeta<User> birthday_columnMeta = new ColumnMeta<User>(
+         ColumnMeta<User> birthday_columnMeta = new ColumnMeta<>(
                new TextColumn<User>()
                {
                   @Override
@@ -207,7 +210,7 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
                   }
                }, "Birthday");
          columnMetas.add(birthday_columnMeta);
-         ColumnMeta<User> married_columnMeta = new ColumnMeta<User>(
+         ColumnMeta<User> married_columnMeta = new ColumnMeta<>(
                new TextColumn<User>()
                {
                   @Override
@@ -222,7 +225,7 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
                   }
                }, "Married");
          columnMetas.add(married_columnMeta);
-         ColumnMeta<User> address_columnMeta = new ColumnMeta<User>(
+         ColumnMeta<User> address_columnMeta = new ColumnMeta<>(
                new TextColumn<User>()
                {
                   @Override
@@ -237,7 +240,7 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
                   }
                }, "Address");
          columnMetas.add(address_columnMeta);
-         ColumnMeta<User> adresses_columnMeta = new ColumnMeta<User>(
+         ColumnMeta<User> adresses_columnMeta = new ColumnMeta<>(
                new TextColumn<User>()
                {
                   @Override
