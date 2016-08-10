@@ -4,8 +4,6 @@
         <description>Forge Persistence Unit</description>
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
-        <class>demo.client.shared.Address</class>
-        <class>demo.client.shared.User</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
