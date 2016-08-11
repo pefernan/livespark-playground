@@ -40,7 +40,7 @@ import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.livespark.flow.api.AppFlow;
 import org.livespark.flow.api.AppFlowExecutor;
 import org.livespark.flow.api.Unit;
-import org.livespark.flow.cdi.api.ForEntity;
+import org.livespark.formmodeler.rendering.client.flow.ForEntity;
 
 import com.google.common.collect.ImmutableMultimap;
 
