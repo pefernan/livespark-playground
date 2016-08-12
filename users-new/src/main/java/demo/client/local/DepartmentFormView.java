@@ -159,9 +159,9 @@ public class DepartmentFormView extends FormView<DepartmentFormModel>
       }
 
       @Override
-      public List<ColumnMeta> getCrudColumns()
+      public List<ColumnMeta<User>> getCrudColumns()
       {
-         List<ColumnMeta> columnMetas = new ArrayList<ColumnMeta>();
+         List<ColumnMeta<User>> columnMetas = new ArrayList<ColumnMeta<User>>();
          ColumnMeta<User> name_columnMeta = new ColumnMeta<User>(
                new TextColumn<User>()
                {

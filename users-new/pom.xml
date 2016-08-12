@@ -296,9 +296,16 @@
     </dependency>
 
     <dependency>
-      <groupId>org.livespark</groupId>
-      <artifactId>livespark-crud-component</artifactId>
-      <version>${version.org.livespark}</version>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-common-widgets</artifactId>
+      <version>${version.org.kie}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-crud-component</artifactId>
+      <version>${version.org.kie}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -347,7 +354,8 @@
           <strict>true</strict>
           <compileSourcesArtifacts>
             <!-- LiveSpark -->
-            <compileSourcesArtifact>org.livespark:livespark-crud-component</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-common-widgets</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-crud-component</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-form-modeler-rendering-api</compileSourcesArtifact>
           </compileSourcesArtifacts>
         </configuration>

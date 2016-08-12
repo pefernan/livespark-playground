@@ -40,8 +40,8 @@ public class UserListView extends ListView<User, UserFormModel>
    }
 
    @Override
-   public List<ColumnMeta> getCrudColumns() {
-      List<ColumnMeta> metas = new ArrayList<ColumnMeta>();
+   public List<ColumnMeta<User>> getCrudColumns() {
+      List<ColumnMeta<User>> metas = new ArrayList<ColumnMeta<User>>();
 
       ColumnMeta<User> columnMeta = new ColumnMeta<User>( new TextColumn<User>() {
          @Override

@@ -40,8 +40,8 @@ public class AddressListView extends ListView<Address, AddressFormModel>
    }
 
    @Override
-   public List<ColumnMeta> getCrudColumns() {
-      List<ColumnMeta> metas = new ArrayList<ColumnMeta>();
+   public List<ColumnMeta<Address>> getCrudColumns() {
+      List<ColumnMeta<Address>> metas = new ArrayList<ColumnMeta<Address>>();
 
       ColumnMeta<Address> columnMeta = new ColumnMeta<Address>( new TextColumn<Address>() {
          @Override

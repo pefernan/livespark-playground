@@ -46,9 +46,9 @@ public class DepartmentListView extends ListView<Department, DepartmentFormModel
    }
 
    @Override
-   public List<ColumnMeta> getCrudColumns()
+   public List<ColumnMeta<Department>> getCrudColumns()
    {
-      List<ColumnMeta> columnMetas = new ArrayList<ColumnMeta>();
+      List<ColumnMeta<Department>> columnMetas = new ArrayList<ColumnMeta<Department>>();
       ColumnMeta<Department> id_columnMeta = new ColumnMeta<Department>(
             new TextColumn<Department>()
             {

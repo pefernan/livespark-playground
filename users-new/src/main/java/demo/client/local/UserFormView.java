@@ -16,7 +16,6 @@ import org.gwtbootstrap3.client.ui.SimpleCheckBox;
 import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
 import demo.client.shared.Address;
 import demo.client.shared.AddressFormModel;
-import demo.client.local.AddressFormView;
 import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubForm;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubFormModelAdapter;
@@ -167,9 +166,9 @@ public class UserFormView extends FormView<UserFormModel>
       }
 
       @Override
-      public List<ColumnMeta> getCrudColumns()
+      public List<ColumnMeta<Address>> getCrudColumns()
       {
-         List<ColumnMeta> columnMetas = new ArrayList<ColumnMeta>();
+         List<ColumnMeta<Address>> columnMetas = new ArrayList<ColumnMeta<Address>>();
          ColumnMeta<Address> street_columnMeta = new ColumnMeta<Address>(
                  new TextColumn<Address>()
                  {
