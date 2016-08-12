@@ -377,7 +377,7 @@
           <generateJsInteropExports>true</generateJsInteropExports>
           <compileSourcesArtifacts>
             <!-- LiveSpark -->
-            <compileSourcesArtifact>org.livespark:livespark-crud-component</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-crud-component</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-form-modeler-rendering-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-app-flow-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-app-flow-cdi-api</compileSourcesArtifact>
