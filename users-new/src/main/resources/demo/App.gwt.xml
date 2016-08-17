@@ -19,7 +19,7 @@
   <inherits name="org.uberfire.commons.UberfireCommons"/>
   <inherits name="org.uberfire.java.nio.UberfireNIO2Model"/>
   <inherits name="org.uberfire.ext.widgets.table.UberfireTableWidget"/>
-  <inherits name="org.livespark.widgets.crud.LiveSparkCRUDWidget"/>
+  <inherits name="org.kie.workbench.common.forms.crud.FormsCRUDWidget"/>
   <inherits name="org.livespark.formmodeler.rendering.FormModelerRenderingAPI"/>
   <inherits name='com.google.gwt.user.theme.clean.Clean'/>
   <inherits name='org.livespark.flow.AppFlow'/>

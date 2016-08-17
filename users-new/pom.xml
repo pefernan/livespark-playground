@@ -319,9 +319,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.livespark</groupId>
-      <artifactId>livespark-crud-component</artifactId>
-      <version>${version.org.livespark}</version>
+      <groupId>org.kie.workbench.forms</groupId>
+      <artifactId>kie-wb-common-forms-crud-component</artifactId>
+      <version>${version.org.kie}</version>
       <scope>provided</scope>
     </dependency>
 
