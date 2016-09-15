@@ -1,9 +1,8 @@
 package demo.client.shared;
 
-import org.livespark.formmodeler.rendering.client.shared.LiveSparkRestService;
 import javax.ws.rs.Path;
-import demo.client.shared.UserFormModel;
-import java.util.List;
+
+import org.livespark.formmodeler.rendering.client.shared.LiveSparkRestService;
 
 @Path("user")
 public interface UserRestService extends LiveSparkRestService<User>

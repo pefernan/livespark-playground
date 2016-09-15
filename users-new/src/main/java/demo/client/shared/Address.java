@@ -5,6 +5,7 @@ package demo.client.shared;
  */
 
 @javax.persistence.Entity
+@org.kie.api.definition.type.Label("Address")
 public class Address implements java.io.Serializable
 {
 
@@ -14,93 +15,93 @@ public class Address implements java.io.Serializable
    @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO, generator = "ADDRESS_ID_GENERATOR")
    @javax.persistence.Id
    @javax.persistence.SequenceGenerator(sequenceName = "ADDRESS_ID_SEQ", name = "ADDRESS_ID_GENERATOR")
-   private java.lang.Long id;
+   private Long id;
 
-   @org.kie.api.definition.type.Label(value = "Street Name")
+   @org.kie.api.definition.type.Label("Street Name")
    @org.hibernate.validator.constraints.NotEmpty
-   private java.lang.String street;
+   private String street;
 
-   @org.kie.api.definition.type.Label(value = "Num #")
-   private java.lang.Integer num;
+   @org.kie.api.definition.type.Label("Num #")
+   private Integer num;
 
-   @org.kie.api.definition.type.Label(value = "CP")
+   @org.kie.api.definition.type.Label("CP")
    @org.hibernate.validator.constraints.NotEmpty
-   private java.lang.String cp;
+   private String cp;
 
-   @org.kie.api.definition.type.Label(value = "City")
+   @org.kie.api.definition.type.Label("City")
    @org.hibernate.validator.constraints.NotEmpty
-   private java.lang.String city;
+   private String city;
 
-   @org.kie.api.definition.type.Label(value = "Country")
-   private java.lang.String country;
+   @org.kie.api.definition.type.Label("Country")
+   private String country;
 
    public Address()
    {
    }
 
-   public java.lang.Long getId()
+   public Long getId()
    {
       return this.id;
    }
 
-   public void setId(java.lang.Long id)
+   public void setId(Long id)
    {
       this.id = id;
    }
 
-   public java.lang.String getStreet()
+   public String getStreet()
    {
       return this.street;
    }
 
-   public void setStreet(java.lang.String street)
+   public void setStreet(String street)
    {
       this.street = street;
    }
 
-   public java.lang.Integer getNum()
+   public Integer getNum()
    {
       return this.num;
    }
 
-   public void setNum(java.lang.Integer num)
+   public void setNum(Integer num)
    {
       this.num = num;
    }
 
-   public java.lang.String getCp()
+   public String getCp()
    {
       return this.cp;
    }
 
-   public void setCp(java.lang.String cp)
+   public void setCp(String cp)
    {
       this.cp = cp;
    }
 
-   public java.lang.String getCity()
+   public String getCity()
    {
       return this.city;
    }
 
-   public void setCity(java.lang.String city)
+   public void setCity(String city)
    {
       this.city = city;
    }
 
-   public java.lang.String getCountry()
+   public String getCountry()
    {
       return this.country;
    }
 
-   public void setCountry(java.lang.String country)
+   public void setCountry(String country)
    {
       this.country = country;
    }
 
-   public Address(java.lang.Long id, java.lang.String street,
-         java.lang.Integer num, java.lang.String cp, java.lang.String city,
-         java.lang.String country)
+   public Address(Long id, String street,
+         Integer num, String cp, String city,
+         String country)
    {
       this.id = id;
       this.street = street;

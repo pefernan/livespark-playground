@@ -204,6 +204,12 @@
 
     <dependency>
       <groupId>org.jboss.errai</groupId>
+      <artifactId>errai-jaxrs-provider</artifactId>
+      <version>${version.org.jboss.errai}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.errai</groupId>
       <artifactId>errai-data-binding</artifactId>
       <version>${version.org.jboss.errai}</version>
       <scope>provided</scope>
@@ -299,7 +305,6 @@
       <groupId>org.kie.workbench.forms</groupId>
       <artifactId>kie-wb-common-forms-common-widgets</artifactId>
       <version>${version.org.kie}</version>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -313,6 +318,13 @@
       <groupId>org.livespark</groupId>
       <artifactId>livespark-form-modeler-rendering-api</artifactId>
       <version>${version.org.livespark}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.livespark</groupId>
+      <artifactId>livespark-app-flow-client</artifactId>
+      <version>${version.org.livespark}</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
@@ -357,6 +369,9 @@
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-common-widgets</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-crud-component</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-form-modeler-rendering-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.livespark:livespark-app-flow-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.livespark:livespark-app-flow-cdi-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.livespark:livespark-app-flow-client</compileSourcesArtifact>
           </compileSourcesArtifacts>
         </configuration>
       </plugin>

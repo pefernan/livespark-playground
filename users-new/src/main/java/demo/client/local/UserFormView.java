@@ -1,33 +1,49 @@
 package demo.client.local;
 
-import org.livespark.formmodeler.rendering.client.view.FormView;
-import demo.client.shared.UserFormModel;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
-import javax.inject.Named;
-import java.util.List;
 import java.util.ArrayList;
-import demo.client.shared.User;
-import org.gwtbootstrap3.client.ui.TextBox;
+import java.util.List;
 import javax.inject.Inject;
-import org.jboss.errai.ui.shared.api.annotations.Bound;
-import org.jboss.errai.ui.shared.api.annotations.DataField;
-import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
-import org.gwtbootstrap3.client.ui.SimpleCheckBox;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubForm;
+import javax.inject.Named;
+
+import com.google.gwt.regexp.shared.RegExp;
+import com.google.gwt.user.cellview.client.TextColumn;
 import demo.client.shared.Address;
 import demo.client.shared.AddressFormModel;
-import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import demo.client.shared.AddressRestService;
+import demo.client.shared.User;
+import demo.client.shared.UserFormModel;
+import org.gwtbootstrap3.client.ui.SimpleCheckBox;
+import org.gwtbootstrap3.client.ui.TextBox;
+import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
+import org.gwtbootstrap3.extras.typeahead.client.base.Dataset;
+import org.gwtbootstrap3.extras.typeahead.client.base.Suggestion;
+import org.gwtbootstrap3.extras.typeahead.client.base.SuggestionCallback;
+import org.jboss.errai.common.client.api.RemoteCallback;
+import org.jboss.errai.enterprise.client.jaxrs.api.RestClient;
+import org.jboss.errai.ui.shared.api.annotations.Bound;
+import org.jboss.errai.ui.shared.api.annotations.DataField;
+import org.jboss.errai.ui.shared.api.annotations.Templated;
+import org.kie.workbench.common.forms.common.client.widgets.typeahead.BindableTypeAhead;
+import org.kie.workbench.common.forms.common.shared.util.MaskInterpreter;
+import org.livespark.flow.cdi.api.FlowComponent;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubForm;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
+import org.livespark.formmodeler.rendering.client.shared.query.QueryCriteria;
+import org.livespark.formmodeler.rendering.client.shared.query.QueryCriteryaType;
+import org.livespark.formmodeler.rendering.client.view.FormView;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
-import com.google.gwt.user.cellview.client.TextColumn;
-import java.lang.Override;
 
 @Templated
 @Named("UserFormView")
-public class UserFormView extends FormView<UserFormModel>
+@FlowComponent
+public class UserFormView extends FormView<User, UserFormModel>
 {
 
+   @Inject
+   @Bound(property = "user.id")
+   @DataField
+   private TextBox user_id;
    @Inject
    @Bound(property = "user.name")
    @DataField
@@ -44,19 +60,57 @@ public class UserFormView extends FormView<UserFormModel>
    @Bound(property = "user.married")
    @DataField
    private SimpleCheckBox user_married;
+   @Inject
+   @Bound(property = "user.title")
    @DataField
-   private SubForm user_address = new SubForm(
-           new User_addressSubFormModelAdapter());
+   private TextBox user_title;
+
+
+    private final String user_address_fieldMask = "{street} {num}, {cp} {city}";
+
+    private MaskInterpreter<Address> user_address_fieldInterpreter = new MaskInterpreter<>( user_address_fieldMask );
+
+    private Dataset<Address> user_address_fieldDataset = new Dataset<Address>() {
+        @Override
+        public void findMatches( final String text, final SuggestionCallback<Address> suggestionCallback ) {
+            QueryCriteria criteria = new QueryCriteria();
+            criteria.setType( QueryCriteryaType.MASK );
+            criteria.getParams().put( "mask", user_address_fieldMask );
+            criteria.getParams().put( "text", text );
+            RestClient.create( AddressRestService.class,
+                               (RemoteCallback<List<Address>>) addresses -> loadListValues_user_address( text, suggestionCallback, addresses ) ).list( criteria );
+
+        }
+    };
+    @DataField
+    @Bound(property = "user.address")
+    private BindableTypeAhead<Address> user_address = new BindableTypeAhead<Address>( user_address_fieldMask,
+                                                                                      user_address_fieldDataset );
+
    @DataField
    private MultipleSubForm user_adresses = new MultipleSubForm(
-           new User_adressesMultipleSubFormModelAdapter());
+         new User_adressesMultipleSubFormModelAdapter());
 
    @Override
    protected int getEntitiesCount()
    {
       return 1;
    }
+    protected void loadListValues_user_address( final String text, final SuggestionCallback<Address> suggestionCallback, List<Address> models ) {
 
+        RegExp regExp = RegExp.compile( text, "gi" );
+
+        final List<Suggestion<Address>> result = new ArrayList<>(  );
+
+        for ( Address model : models ) {
+            String suggestion = user_address_fieldInterpreter.render( model );
+
+            suggestion = regExp.replace( suggestion, "<strong>$&</strong>" );
+
+            result.add( Suggestion.create( suggestion, model, user_address_fieldDataset ) );
+        }
+        suggestionCallback.execute( result );
+    }
    @Override
    protected List getEntities()
    {
@@ -77,10 +131,12 @@ public class UserFormView extends FormView<UserFormModel>
    @Override
    protected void initForm()
    {
+      validator.registerInput("user_id", user_id);
       validator.registerInput("user_name", user_name);
       validator.registerInput("user_lastName", user_lastName);
       validator.registerInput("user_birthday", user_birthday);
       validator.registerInput("user_married", user_married);
+      validator.registerInput("user_title", user_title);
       validator.registerInput("user_address", user_address);
       updateNestedModels(true);
       validator.registerInput("user_adresses", user_adresses);
@@ -94,16 +150,11 @@ public class UserFormView extends FormView<UserFormModel>
    @Override
    public boolean doExtraValidations()
    {
-      boolean valid = true;
-      if (!user_address.validate() && valid)
-      {
-         valid = false;
-      }
-      return valid;
+      return true;
    }
 
    public class User_addressSubFormModelAdapter implements
-           SubFormModelAdapter<Address, AddressFormModel>
+         SubFormModelAdapter<Address, AddressFormModel>
    {
       @Override
       public Class<AddressFormView> getFormViewType()
@@ -112,28 +163,15 @@ public class UserFormView extends FormView<UserFormModel>
       }
 
       @Override
-      public AddressFormModel getFormModelForModel(Address model)
+      public AddressFormModel getFormModelForModel( Address model)
       {
-         return new AddressFormModel(model);
+         return new AddressFormModel( model);
       }
    }
 
+   @Override
    protected void updateNestedModels(boolean init)
    {
-      demo.client.shared.Address address = getModel().getUser().getAddress();
-      if (address == null && init)
-      {
-         address = new demo.client.shared.Address();
-         getModel().getUser().setAddress(address);
-      }
-      user_address.setModel(address);
-      List adresses = getModel().getUser().getAdresses();
-      if (adresses == null && init)
-      {
-         adresses = new ArrayList<demo.client.shared.Address>();
-         getModel().getUser().setAdresses(adresses);
-      }
-      user_adresses.setModel(adresses);
    }
 
    @Override
@@ -144,8 +182,8 @@ public class UserFormView extends FormView<UserFormModel>
    }
 
    public class User_adressesMultipleSubFormModelAdapter
-           implements
-           MultipleSubFormModelAdapter<List<Address>, Address, AddressFormModel, AddressFormModel>
+         implements
+         MultipleSubFormModelAdapter<List<Address>, Address, AddressFormModel, AddressFormModel>
    {
       @Override
       public Class<AddressFormView> getCreationForm()
@@ -160,92 +198,88 @@ public class UserFormView extends FormView<UserFormModel>
       }
 
       @Override
-      public AddressFormModel getEditionFormModel(Address model)
+      public AddressFormModel getEditionFormModel( Address model)
       {
-         return new AddressFormModel(model);
+         return new AddressFormModel( model);
       }
 
       @Override
-      public List<ColumnMeta<Address>> getCrudColumns()
-      {
-         List<ColumnMeta<Address>> columnMetas = new ArrayList<ColumnMeta<Address>>();
-         ColumnMeta<Address> street_columnMeta = new ColumnMeta<Address>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getStreet();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "Street Name");
-         columnMetas.add(street_columnMeta);
-         ColumnMeta<Address> num_columnMeta = new ColumnMeta<Address>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getNum();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "#");
-         columnMetas.add(num_columnMeta);
-         ColumnMeta<Address> cp_columnMeta = new ColumnMeta<Address>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getCp();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "CP");
-         columnMetas.add(cp_columnMeta);
-         ColumnMeta<Address> city_columnMeta = new ColumnMeta<Address>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getCity();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "City");
-         columnMetas.add(city_columnMeta);
-         ColumnMeta<Address> country_columnMeta = new ColumnMeta<Address>(
-                 new TextColumn<Address>()
-                 {
-                    @Override
-                    public String getValue(Address model)
-                    {
-                       Object value = model.getCountry();
-                       if (value == null)
-                       {
-                          return "";
-                       }
-                       return String.valueOf(value);
-                    }
-                 }, "Country");
-         columnMetas.add(country_columnMeta);
-         return columnMetas;
-      }
+		public List<ColumnMeta<Address>> getCrudColumns() {
+			List<ColumnMeta<Address>> columnMetas = new ArrayList<>();
+			ColumnMeta<Address> id_columnMeta = new ColumnMeta<Address>(
+					new TextColumn<Address>() {
+						@Override
+						public String getValue(Address model) {
+							Object value = model.getId();
+							if (value == null) {
+								return "";
+							}
+							return String.valueOf(value);
+						}
+					}, "ID #");
+			columnMetas.add(id_columnMeta);
+			ColumnMeta<Address> street_columnMeta = new ColumnMeta<Address>(
+					new TextColumn<Address>() {
+						@Override
+						public String getValue(Address model) {
+							Object value = model.getStreet();
+							if (value == null) {
+								return "";
+							}
+							return String.valueOf(value);
+						}
+					}, "Street Name");
+			columnMetas.add(street_columnMeta);
+			ColumnMeta<Address> num_columnMeta = new ColumnMeta<Address>(
+					new TextColumn<Address>() {
+						@Override
+						public String getValue(Address model) {
+							Object value = model.getNum();
+							if (value == null) {
+								return "";
+							}
+							return String.valueOf(value);
+						}
+					}, "Num #");
+			columnMetas.add(num_columnMeta);
+			ColumnMeta<Address> cp_columnMeta = new ColumnMeta<Address>(
+					new TextColumn<Address>() {
+						@Override
+						public String getValue(Address model) {
+							Object value = model.getCp();
+							if (value == null) {
+								return "";
+							}
+							return String.valueOf(value);
+						}
+					}, "CP");
+			columnMetas.add(cp_columnMeta);
+			ColumnMeta<Address> city_columnMeta = new ColumnMeta<Address>(
+					new TextColumn<Address>() {
+						@Override
+						public String getValue(Address model) {
+							Object value = model.getCity();
+							if (value == null) {
+								return "";
+							}
+							return String.valueOf(value);
+						}
+					}, "City");
+			columnMetas.add(city_columnMeta);
+			ColumnMeta<Address> country_columnMeta = new ColumnMeta<Address>(
+					new TextColumn<Address>() {
+						@Override
+						public String getValue(Address model) {
+							Object value = model.getCountry();
+							if (value == null) {
+								return "";
+							}
+							return String.valueOf(value);
+						}
+					}, "Country");
+			columnMetas.add(country_columnMeta);
+			return columnMetas;
+		}
    }
 
    @Override
@@ -255,6 +289,7 @@ public class UserFormView extends FormView<UserFormModel>
       user_lastName.setReadOnly(readOnly);
       user_birthday.setReadOnly(readOnly);
       user_married.setEnabled(!readOnly);
+      user_title.setReadOnly(readOnly);
       user_address.setReadOnly(readOnly);
    }
 }

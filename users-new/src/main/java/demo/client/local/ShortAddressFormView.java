@@ -15,7 +15,7 @@ import org.livespark.formmodeler.rendering.client.view.FormView;
 
 @Templated
 @Named("ShortAddressFormView")
-public class ShortAddressFormView extends FormView<ShortAddressFormModel>
+public class ShortAddressFormView extends FormView<Address, ShortAddressFormModel>
 {
 
    @Inject

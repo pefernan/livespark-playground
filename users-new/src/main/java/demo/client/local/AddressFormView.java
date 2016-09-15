@@ -11,13 +11,19 @@ import org.gwtbootstrap3.client.ui.TextBox;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
+import org.livespark.flow.cdi.api.FlowComponent;
 import org.livespark.formmodeler.rendering.client.view.FormView;
 
 @Templated
 @Named("AddressFormView")
-public class AddressFormView extends FormView<AddressFormModel>
+@FlowComponent
+public class AddressFormView extends FormView<Address, AddressFormModel>
 {
 
+   @Inject
+   @Bound(property = "address.id")
+   @DataField
+   private TextBox address_id;
    @Inject
    @Bound(property = "address.street")
    @DataField
@@ -51,7 +57,7 @@ public class AddressFormView extends FormView<AddressFormModel>
       List entities = new ArrayList();
       Object address = getModel().getAddress();
       if (address != null)
-         entities.add( address );
+         entities.add(address);
       return entities;
    }
 
@@ -65,6 +71,7 @@ public class AddressFormView extends FormView<AddressFormModel>
    @Override
    protected void initForm()
    {
+      validator.registerInput("address_id", address_id);
       validator.registerInput("address_street", address_street);
       validator.registerInput("address_num", address_num);
       validator.registerInput("address_cp", address_cp);
@@ -92,15 +99,5 @@ public class AddressFormView extends FormView<AddressFormModel>
       address_cp.setReadOnly(readOnly);
       address_city.setReadOnly(readOnly);
       address_country.setReadOnly(readOnly);
-   }
-
-   @Override
-   public AddressFormModel getModel() {
-      return binder.getModel();
-   }
-
-   @Override
-   public boolean isValid() {
-      return validate() & doExtraValidations();
    }
 }
