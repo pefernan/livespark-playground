@@ -303,7 +303,7 @@
 
     <dependency>
       <groupId>org.kie.workbench.forms</groupId>
-      <artifactId>kie-wb-common-forms-common-widgets</artifactId>
+      <artifactId>kie-wb-common-forms-common-rendering-client</artifactId>
       <version>${version.org.kie}</version>
     </dependency>
 
@@ -366,7 +366,8 @@
           <strict>true</strict>
           <compileSourcesArtifacts>
             <!-- LiveSpark -->
-            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-common-widgets</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-common-rendering-shared</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-common-rendering-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.forms:kie-wb-common-forms-crud-component</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-form-modeler-rendering-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.livespark:livespark-app-flow-api</compileSourcesArtifact>

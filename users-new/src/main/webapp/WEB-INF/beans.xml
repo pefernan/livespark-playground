@@ -4,7 +4,6 @@
   <scan>
     <!-- These exclusions were added by Errai to avoid deploying client-side classes to the server -->
     <exclude name = "demo.client.local.UserListView" />
-    <exclude name = "demo.client.local.UserFormView$1" />
     <exclude name = "demo.client.local.AddressListView$2" />
     <exclude name = "demo.client.local.UserFormView$User_adressesMultipleSubFormModelAdapter$4" />
     <exclude name = "demo.client.local.UserListView$6" />

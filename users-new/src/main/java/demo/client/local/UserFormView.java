@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.cellview.client.TextColumn;
 import demo.client.shared.Address;
 import demo.client.shared.AddressFormModel;
@@ -15,23 +14,16 @@ import demo.client.shared.UserFormModel;
 import org.gwtbootstrap3.client.ui.SimpleCheckBox;
 import org.gwtbootstrap3.client.ui.TextBox;
 import org.gwtbootstrap3.extras.datetimepicker.client.ui.DateTimePicker;
-import org.gwtbootstrap3.extras.typeahead.client.base.Dataset;
-import org.gwtbootstrap3.extras.typeahead.client.base.Suggestion;
-import org.gwtbootstrap3.extras.typeahead.client.base.SuggestionCallback;
-import org.jboss.errai.common.client.api.RemoteCallback;
-import org.jboss.errai.enterprise.client.jaxrs.api.RestClient;
 import org.jboss.errai.ui.shared.api.annotations.Bound;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
-import org.kie.workbench.common.forms.common.client.widgets.typeahead.BindableTypeAhead;
-import org.kie.workbench.common.forms.common.shared.util.MaskInterpreter;
+import org.kie.workbench.common.forms.common.rendering.client.widgets.typeahead.BindableTypeAhead;
 import org.livespark.flow.cdi.api.FlowComponent;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubForm;
 import org.livespark.formmodeler.rendering.client.shared.fields.MultipleSubFormModelAdapter;
 import org.livespark.formmodeler.rendering.client.shared.fields.SubFormModelAdapter;
-import org.livespark.formmodeler.rendering.client.shared.query.QueryCriteria;
-import org.livespark.formmodeler.rendering.client.shared.query.QueryCriteryaType;
 import org.livespark.formmodeler.rendering.client.view.FormView;
+import org.livespark.formmodeler.rendering.client.widgets.typeahead.LiveSparkStaticDataset;
 import org.uberfire.ext.widgets.table.client.ColumnMeta;
 
 @Templated
@@ -68,24 +60,12 @@ public class UserFormView extends FormView<User, UserFormModel>
 
     private final String user_address_fieldMask = "{street} {num}, {cp} {city}";
 
-    private MaskInterpreter<Address> user_address_fieldInterpreter = new MaskInterpreter<>( user_address_fieldMask );
-
-    private Dataset<Address> user_address_fieldDataset = new Dataset<Address>() {
-        @Override
-        public void findMatches( final String text, final SuggestionCallback<Address> suggestionCallback ) {
-            QueryCriteria criteria = new QueryCriteria();
-            criteria.setType( QueryCriteryaType.MASK );
-            criteria.getParams().put( "mask", user_address_fieldMask );
-            criteria.getParams().put( "text", text );
-            RestClient.create( AddressRestService.class,
-                               (RemoteCallback<List<Address>>) addresses -> loadListValues_user_address( text, suggestionCallback, addresses ) ).list( criteria );
-
-        }
-    };
     @DataField
     @Bound(property = "user.address")
     private BindableTypeAhead<Address> user_address = new BindableTypeAhead<Address>( user_address_fieldMask,
-                                                                                      user_address_fieldDataset );
+                                                                                      new LiveSparkStaticDataset<Address>(
+                                                                                              user_address_fieldMask,
+                                                                                              AddressRestService.class ) );
 
    @DataField
    private MultipleSubForm user_adresses = new MultipleSubForm(
@@ -96,21 +76,7 @@ public class UserFormView extends FormView<User, UserFormModel>
    {
       return 1;
    }
-    protected void loadListValues_user_address( final String text, final SuggestionCallback<Address> suggestionCallback, List<Address> models ) {
 
-        RegExp regExp = RegExp.compile( text, "gi" );
-
-        final List<Suggestion<Address>> result = new ArrayList<>(  );
-
-        for ( Address model : models ) {
-            String suggestion = user_address_fieldInterpreter.render( model );
-
-            suggestion = regExp.replace( suggestion, "<strong>$&</strong>" );
-
-            result.add( Suggestion.create( suggestion, model, user_address_fieldDataset ) );
-        }
-        suggestionCallback.execute( result );
-    }
    @Override
    protected List getEntities()
    {
