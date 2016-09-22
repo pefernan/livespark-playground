@@ -60,12 +60,10 @@ public class UserFormView extends FormView<User, UserFormModel>
 
     private final String user_address_fieldMask = "{street} {num}, {cp} {city}";
 
+    @Inject
     @DataField
     @Bound(property = "user.address")
-    private BindableTypeAhead<Address> user_address = new BindableTypeAhead<Address>( user_address_fieldMask,
-                                                                                      new LiveSparkStaticDataset<Address>(
-                                                                                              user_address_fieldMask,
-                                                                                              AddressRestService.class ) );
+    private BindableTypeAhead<Address> user_address;
 
    @DataField
    private MultipleSubForm user_adresses = new MultipleSubForm(
@@ -111,6 +109,10 @@ public class UserFormView extends FormView<User, UserFormModel>
    @Override
    public void beforeDisplay()
    {
+       user_address.init( user_address_fieldMask,
+                          new LiveSparkStaticDataset<Address>(
+                                  user_address_fieldMask,
+                                  AddressRestService.class ) );
    }
 
    @Override
